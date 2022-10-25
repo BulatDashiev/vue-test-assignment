@@ -1,0 +1,72 @@
+<script setup lang="ts">
+import type { Item, ListStoreType } from '@/stores/list';
+
+const { list } = defineProps<{
+  list: ListStoreType;
+}>();
+const onSelect = (event: Event, item: Item) => {
+  const selected = (event.target as HTMLInputElement).checked;
+  list.updateItem(item.id, { selected });
+}
+const onAmountChange = (event: Event, item: Item) => {
+  const amount = parseInt((event.target as HTMLInputElement).value);
+  list.updateItem(item.id, { amount });
+}
+const onColorChange = (event: Event, item: Item) => {
+  const color = (event.target as HTMLInputElement).value;
+  list.updateItem(item.id, { color });
+}
+</script>
+
+<template>
+  <ul>
+    <li v-for="item in list.items">
+      <label>
+        <input type="checkbox" :value="item.id" :checked="item.selected" @change="event => onSelect(event, item)">
+        <span>Item {{ item.id + 1 }}</span>
+        <input type="number" min="0" :value="item.amount" @change="event => onAmountChange(event, item)">
+        <input type="color" :value="item.color" @change="event => onColorChange(event, item)">
+      </label>
+    </li>
+  </ul>
+</template>
+
+<style scoped>
+ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+span {
+  margin-inline: 10px;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+input[type="number"] {
+  margin-inline-start: auto;
+  width: 40px;
+  border: none;
+  text-align: center;
+}
+
+input[type="color"] {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+}
+</style>
