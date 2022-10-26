@@ -68,12 +68,11 @@ const createListStore = (id: string) =>
         return result;
       },
       checkedStatus: (state) => {
-        let zeroChecked = true;
-        const allChecked = state.items.every((item) => {
-          if (item.selected) zeroChecked = false;
-          return item.selected;
-        });
-        return allChecked ? "all" : zeroChecked ? "none" : "indeterminate";
+        const zeroChecked = !state.items.some((item) => item.selected);
+        if (zeroChecked) return "none";
+        const allChecked = !state.items.some((item) => !item.selected);
+        if (allChecked) return "all";
+        return "indeterminate";
       },
     },
     actions: {
