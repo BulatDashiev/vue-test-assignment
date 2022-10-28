@@ -37,8 +37,8 @@ export default {
       <div class="row" v-else>
         <div
           class="box"
-          v-for="item in list.shuffled"
-          :key="item.id"
+          v-for="item, i in list.shuffled"
+          :key="i"
           :style="{ backgroundColor: item.color }"
           @click="list.decrement(item.id)"
         ></div>
