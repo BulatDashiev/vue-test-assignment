@@ -12,23 +12,37 @@ const onSelect = (list: ListStoreType) => {
   } else {
     list.checkAll();
   }
-}
+};
+</script>
+<script>
+export default {
+  name: "AssignmentComponent",
+};
 </script>
 
 <template>
   <div class="list">
-    <details v-for="list in lists.items">
+    <details v-for="(list, i) in lists.items" :key="i">
       <summary>
         <DropdownIcon />
-        <input type="checkbox" :indeterminate="list.checkedStatus === 'indeterminate'"
-          :checked="list.checkedStatus === 'all'" @change="() => onSelect(list)">
+        <input
+          type="checkbox"
+          :indeterminate="list.checkedStatus === 'indeterminate'"
+          :checked="list.checkedStatus === 'all'"
+          @change="onSelect(list)"
+        />
         <span>{{ list.$id }}</span>
       </summary>
       <List :list="list" />
     </details>
   </div>
   <div class="view">
-    <View v-for="list in lists.items" :list="list" :title="list.$id" />
+    <View
+      v-for="(list, i) in lists.items"
+      :key="i"
+      :list="list"
+      :title="list.$id"
+    />
   </div>
 </template>
 
@@ -52,7 +66,7 @@ summary span {
 }
 
 summary::marker {
-  content: '';
+  content: "";
 }
 
 summary :deep(svg) {

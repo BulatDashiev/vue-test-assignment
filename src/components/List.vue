@@ -1,31 +1,50 @@
 <script setup lang="ts">
-import type { Item, ListStoreType } from '@/stores/list';
+import type { Item, ListStoreType } from "@/stores/list";
 
-const { list } = defineProps<{
+const props = defineProps<{
   list: ListStoreType;
 }>();
 const onSelect = (event: Event, item: Item) => {
   const selected = (event.target as HTMLInputElement).checked;
-  list.updateItem(item.id, { selected });
-}
+  props.list.updateItem(item.id, { selected });
+};
 const onAmountChange = (event: Event, item: Item) => {
   const amount = parseInt((event.target as HTMLInputElement).value);
-  list.updateItem(item.id, { amount });
-}
+  props.list.updateItem(item.id, { amount });
+};
 const onColorChange = (event: Event, item: Item) => {
   const color = (event.target as HTMLInputElement).value;
-  list.updateItem(item.id, { color });
-}
+  props.list.updateItem(item.id, { color });
+};
+</script>
+<script>
+export default {
+  name: "ListComponent",
+};
 </script>
 
 <template>
   <ul>
-    <li v-for="item in list.items">
+    <li v-for="item in list.items" :key="item.id">
       <label>
-        <input type="checkbox" :value="item.id" :checked="item.selected" @change="event => onSelect(event, item)">
+        <input
+          type="checkbox"
+          :value="item.id"
+          :checked="item.selected"
+          @change="onSelect($event, item)"
+        />
         <span>Item {{ item.id + 1 }}</span>
-        <input type="number" min="0" :value="item.amount" @change="event => onAmountChange(event, item)">
-        <input type="color" :value="item.color" @change="event => onColorChange(event, item)">
+        <input
+          type="number"
+          min="0"
+          :value="item.amount"
+          @change="onAmountChange($event, item)"
+        />
+        <input
+          type="color"
+          :value="item.color"
+          @change="onColorChange($event, item)"
+        />
       </label>
     </li>
   </ul>

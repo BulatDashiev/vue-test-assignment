@@ -2,33 +2,46 @@
 import type { ListStoreType } from "@/stores/list";
 import { ref } from "vue";
 
-const { list, title } = defineProps<{
+defineProps<{
   list: ListStoreType;
   title: string;
 }>();
 const ordered = ref(true);
-
-const onClick = () => {
-  ordered.value = !ordered.value;
-}
+</script>
+<script>
+export default {
+  name: "ViewComponent",
+};
 </script>
 
 <template>
   <div class="view">
     <div class="header">
       <span>{{ title }}</span>
-      <button @click="onClick" v-if="list.ordered.length > 0">{{
-          ordered ? "Перемешать" : "Отсортировать"
-      }}</button>
+      <button @click="ordered = !ordered" v-if="list.ordered.length > 0">
+        {{ ordered ? "Перемешать" : "Отсортировать" }}
+      </button>
     </div>
     <div class="content" v-if="list.ordered.length > 0">
-      <div class="row" v-if="ordered" v-for="items in list.ordered">
-        <div class="box" v-for="item in items" :style="{ backgroundColor: item.color }"
-          @click="() => list.decrement(item.id)"></div>
-      </div>
-      <div class="row" v-else="ordered">
-        <div class="box" v-for="item in list.shuffled" :style="{ backgroundColor: item.color }"
-          @click="() => list.decrement(item.id)"></div>
+      <template v-if="ordered">
+        <div class="row" v-for="(items, i) in list.ordered" :key="i">
+          <div
+            class="box"
+            v-for="item in items"
+            :key="item.id"
+            :style="{ backgroundColor: item.color }"
+            @click="list.decrement(item.id)"
+          ></div>
+        </div>
+      </template>
+      <div class="row" v-else>
+        <div
+          class="box"
+          v-for="item in list.shuffled"
+          :key="item.id"
+          :style="{ backgroundColor: item.color }"
+          @click="list.decrement(item.id)"
+        ></div>
       </div>
     </div>
   </div>
