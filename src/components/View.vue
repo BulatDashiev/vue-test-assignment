@@ -30,7 +30,7 @@ export default {
             v-for="item in items"
             :key="item.id"
             :style="{ backgroundColor: item.color }"
-            @click="list.decrement(item.id)"
+            @click="item.amount--"
           ></div>
         </div>
       </template>
@@ -40,7 +40,7 @@ export default {
           v-for="item, i in list.shuffled"
           :key="i"
           :style="{ backgroundColor: item.color }"
-          @click="list.decrement(item.id)"
+          @click="item.amount--"
         ></div>
       </div>
     </div>

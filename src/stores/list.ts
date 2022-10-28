@@ -88,9 +88,6 @@ const createListStore = (id: string) =>
       uncheckAll() {
         this.items.forEach((item) => (item.selected = false));
       },
-      decrement(index: number) {
-        if (this.items[index].amount > 0) this.items[index].amount--;
-      },
     },
   });
 

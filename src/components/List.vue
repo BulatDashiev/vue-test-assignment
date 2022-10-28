@@ -1,21 +1,9 @@
 <script setup lang="ts">
-import type { Item, ListStoreType } from "@/stores/list";
+import type { ListStoreType } from "@/stores/list";
 
-const props = defineProps<{
+defineProps<{
   list: ListStoreType;
 }>();
-const onSelect = (event: Event, item: Item) => {
-  const selected = (event.target as HTMLInputElement).checked;
-  props.list.updateItem(item.id, { selected });
-};
-const onAmountChange = (event: Event, item: Item) => {
-  const amount = parseInt((event.target as HTMLInputElement).value);
-  props.list.updateItem(item.id, { amount });
-};
-const onColorChange = (event: Event, item: Item) => {
-  const color = (event.target as HTMLInputElement).value;
-  props.list.updateItem(item.id, { color });
-};
 </script>
 <script lang="ts">
 export default {
@@ -27,24 +15,10 @@ export default {
   <ul>
     <li v-for="item in list.items" :key="item.id">
       <label>
-        <input
-          type="checkbox"
-          :value="item.id"
-          :checked="item.selected"
-          @change="onSelect($event, item)"
-        />
+        <input type="checkbox" :value="item.id" v-model="item.selected" />
         <span>Item {{ item.id + 1 }}</span>
-        <input
-          type="number"
-          min="0"
-          :value="item.amount"
-          @change="onAmountChange($event, item)"
-        />
-        <input
-          type="color"
-          :value="item.color"
-          @change="onColorChange($event, item)"
-        />
+        <input type="number" min="0" v-model="item.amount" />
+        <input type="color" v-model="item.color" />
       </label>
     </li>
   </ul>
