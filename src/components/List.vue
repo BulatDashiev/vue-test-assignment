@@ -17,7 +17,7 @@ const onColorChange = (event: Event, item: Item) => {
   props.list.updateItem(item.id, { color });
 };
 </script>
-<script>
+<script lang="ts">
 export default {
   name: "ListComponent",
 };

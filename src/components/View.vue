@@ -8,7 +8,7 @@ defineProps<{
 }>();
 const ordered = ref(true);
 </script>
-<script>
+<script lang="ts">
 export default {
   name: "ViewComponent",
 };

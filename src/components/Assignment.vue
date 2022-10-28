@@ -14,7 +14,7 @@ const onSelect = (list: ListStoreType) => {
   }
 };
 </script>
-<script>
+<script lang="ts">
 export default {
   name: "AssignmentComponent",
 };
